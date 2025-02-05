@@ -18,6 +18,7 @@ npm install
 ```
 
 3. **Configuration de la base de donnée**
+   
 Chacun doit configurer sa base de données locale, si votre configuration MySQL est différente
 adaptée l'URL en fonction des identifiants et de vos paramètres de connexion.
 Dans le fichier .env, il faudra donc modifier  :
