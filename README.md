@@ -19,8 +19,7 @@ npm install
 
 3. **Configuration de la base de donnée**
    
-Chacun doit configurer sa base de données locale, si votre configuration MySQL est différente
-adaptée l'URL en fonction des identifiants et de vos paramètres de connexion.
+Chacun doit configurer sa base de données locale. Si votre configuration MySQL est différente, adaptez l'URL en fonction de vos identifiants et de vos paramètres de connexion.
 Dans le fichier .env, il faudra donc modifier  :
 DATABASE_URL="mysql://nodejs:nodejs@127.0.0.1:3306/UE316"
 
