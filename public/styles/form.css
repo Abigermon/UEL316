@@ -1,0 +1,86 @@
+/* Style général du formulaire */
+
+.neumorphic-form {
+    max-width: 350px;
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #E5E5E5;
+    border-radius: 15px;
+    box-shadow: 10px 10px 20px #b8b9be, -10px -10px 20px #ffffff;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    background: #E5E5E5; 
+    box-shadow: inset 5px 5px 10px #b8b9be, inset -5px -5px 10px #ffffff;
+    outline: none;
+    transition: 0.3s;
+    color: #333;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    box-shadow: inset 3px 3px 6px #b8b9be, inset -3px -3px 6px #ffffff;
+}
+
+.input-group label {
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    font-size: 14px;
+    color: #777;
+    transition: 0.3s ease-in-out;
+}
+
+.input-group input:focus + label,
+.input-group textarea:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group textarea:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #5A6521;
+    background: #E5E5E5;
+    padding: 0 5px;
+}
+
+.neumorphic-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    color: #5A6521; 
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    background: #E5E5E5; 
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.7);
+}
+
+.neumorphic-btn:hover {
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 10px rgba(255, 255, 255, 0.7);
+    transform: scale(1.05); 
+}
+
+
+.neumorphic-btn:active {
+    transform: scale(0.98);
+    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.2), inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+}
+
+.lien-user {
+    font-size: 14px !important;
+    font-style: italic !important;
+}

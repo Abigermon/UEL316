@@ -1,0 +1,165 @@
+body {
+    background-color: #f8f9fa;
+}
+
+h1 {
+    color: #343a40;
+}
+
+.btn {
+    padding: 15px;
+    font-size: 1.2em;
+}
+
+
+/* Style du logo */
+.logo {
+    height: 60px;
+    transition: transform 0.5s ease-in-out;
+    margin-left: 50px;
+}
+
+.logo:hover {
+    transform: scale(1.7) rotate(360deg);
+}
+
+/* Navbar moderne */
+.navbar {
+    background-color: #5A6521;
+    padding: 15px;
+}
+
+/* Effet sur les liens du menu */
+.navbar-nav .nav-link {
+    color: white !important;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    transform: scale(1.2);
+}
+
+/*Bouton contact*/
+
+.call-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    background-color: #dc3545; /* Rouge moderne */
+    border-radius: 50px;
+    border: none;
+    text-decoration: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+}
+
+
+.call-button:hover {
+    background-color:#5A6521;
+    transform: scale(1.1) rotate(3deg);
+}
+
+/* 🌟 Style général du formulaire */
+/* 🌟 Style général du formulaire */
+.neumorphic-form {
+    max-width: 350px;
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #E5E5E5; /* Nouveau fond très clair */
+    border-radius: 15px;
+    box-shadow: 10px 10px 20px #b8b9be, -10px -10px 20px #ffffff;
+}
+
+/* 🌟 Style des champs */
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    background: #E5E5E5; /* Fond plus clair */
+    box-shadow: inset 5px 5px 10px #b8b9be, inset -5px -5px 10px #ffffff;
+    outline: none;
+    transition: 0.3s;
+    color: #333;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    box-shadow: inset 3px 3px 6px #b8b9be, inset -3px -3px 6px #ffffff;
+}
+
+/* 🌟 Labels flottants */
+.input-group label {
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    font-size: 14px;
+    color: #777;
+    transition: 0.3s ease-in-out;
+}
+
+.input-group input:focus + label,
+.input-group textarea:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group textarea:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #5A6521; /* Je garde cette couleur pour les labels */
+    background: #E5E5E5;
+    padding: 0 5px;
+}
+
+/* 🌟 Bouton Neumorphique avec couleur #E5E5E5 */
+.neumorphic-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    color: #5A6521; /* Couleur du texte du bouton */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    background: #E5E5E5; /* Fond du bouton très clair */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.7); /* Ombre subtile */
+}
+
+/* 🌟 Effet au survol */
+.neumorphic-btn:hover {
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 10px rgba(255, 255, 255, 0.7);
+    transform: scale(1.05); /* Agrandissement */
+}
+
+/* 🌟 Effet au clic */
+.neumorphic-btn:active {
+    transform: scale(0.98); /* Réduction au clic */
+    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.2), inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+}
+
+h3{
+    text-align: center; /* Centrer le texte */
+    font-size: 20px; /* Taille du texte du titre */
+    font-weight: bold; /* Mettre le titre en gras */ /* Choisir une couleur agréable, ici la couleur de base */
+    margin-bottom: 20px; /* Un petit espace sous le titre */
+}
+
+.lien-user {
+    font-size: 14px !important;
+    font-style: italic !important;
+}
+
+
+
+    

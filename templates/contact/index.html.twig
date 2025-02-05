@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+    <section class="contact text-center">
+    <div class="container">
+        <h2>📞 Une question ? Nous sommes là !</h2>
+        <p>Besoin d'infos ? Contactez-nous par message ou téléphone, nous vous répondrons rapidement !</p>
+    </div>
+    <a href="tel:0634113411" class="btn btn-danger call-button"> Contacter GreenHarvest</a>
+    <br><br>
+    <p>Ou bien, il vous suffit juste de remplir le formulaire suivant : </p>
+
+    </div>
+    </section>
+    <form class="neumorphic-form">
+       <h3>Formulaire<h3>
+    <div class="input-group">
+        <input type="email" id="email" required placeholder=" ">
+        <label for="email">Email</label>
+    </div>
+    <div class="input-group">
+        <textarea id="message" rows="4" required placeholder=" "></textarea>
+        <label for="message">Message</label>
+    </div>
+    <button type="submit" class="neumorphic-btn">Envoyer</button>
+</form>
+<br>
+        
+{% endblock %}
+
