@@ -32,6 +32,7 @@ security:
     # Contrôle d'accès : définis ici qui a accès à quelles routes
     access_control:
         - { path: ^/profile, roles: ROLE_USER }
+        - {path: ^/admin, roles: ROLE_ADMIN }
 
         - { path: ^/home, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 

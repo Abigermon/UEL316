@@ -1,9 +1,51 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container mt-5">
-    <h1>Actualités</h1>
-    <p>Liste des articles...</p>
-</div>
-{% endblock %}
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">Actualités</h1>
+            <span class="badge bg-secondary">
+                {{posts.getTotalItemCount}} actualités
+            </span>
+        </div>
 
+        <div class="row g-4">
+            {% for post in posts %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
+                        {% if post.image %}
+                            <img 
+                                src="{{ asset( post.image) }}" 
+                                alt="{{ post.title }}"
+                                class="card-img-top object-fit-cover"
+                                style="height: 200px;"
+                            >
+                        {% endif %}
+                        
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            
+                            {% if post.tag|length > 0 %}
+                                <div class="mb-3">
+                                    {% for tag in post.tag %}
+                                        <span class="badge bg-warning text-dark me-1">
+                                            {{ tag.name }}
+                                        </span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            
+                            <div class="card-text">
+                                {{ post.content|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(posts) }}
+        </div>
+    </div>
+{% endblock %}

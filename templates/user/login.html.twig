@@ -2,18 +2,19 @@
 
 {% block body %}
 <br>
-    <form class="neumorphic-form">
-        <h3 class="form-title">Connexion</h3>
-        <div class="input-group">
-            <input type="email" id="email" required placeholder=" ">
-            <label for="email">Email</label>
-        </div>
-        <div class="input-group">
-            <input type="password" id="password" required placeholder=" ">
-            <label for="password">Mot de passe</label>
-        </div>
-        <button type="submit" class="neumorphic-btn">Se connecter</button>
-    </form>
+<form class="neumorphic-form" method="post">
+    <h3 class="form-title">Connexion</h3>
+    <div class="input-group">
+        <input type="email" id="email" name="_username" value="{{ last_username }}" required placeholder=" ">
+        <label for="email">Email</label>
+    </div>
+    <div class="input-group">
+        <input type="password" id="password" name="_password" required placeholder=" ">
+        <label for="password">Mot de passe</label>
+    </div>
+    <button type="submit" class="neumorphic-btn">Se connecter</button>
+</form>
+
     <div class="d-flex justify-content-center">
         <a href="{{ path('app_register') }}" class="fst-italic">Pas encore membre ?</a>
     </div>

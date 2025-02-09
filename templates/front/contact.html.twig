@@ -28,23 +28,17 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ path('app_home') }}">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('app_front_actualites') }}">Actualités</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('app_news') }}">Actualités</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('app_about') }}">À propos</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('app_contact') }}">Contact</a></li>
                     <li class="nav-item">                    
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                             <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
                         {% else %}
+                            //inscription
+                            <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
                             <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
                         {% endif %}
-                    
-                    </li>
-                    <li class="nav-item">
-                        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
-                        {% endif %}
-
-                    </li>
                 </ul>
             </div>
         </div>
