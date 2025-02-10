@@ -24,31 +24,47 @@ class UserController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
-
-        // Crée le formulaire et l'associe à l'entité User
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        // Si le formulaire est soumis et valide, on enregistre l'utilisateur
         if ($form->isSubmitted() && $form->isValid()) {
-            // Hash du mot de passe avant sauvegarde
-            $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
+            // Récupérer le mot de passe en clair depuis le formulaire
+            $plainPassword = $form->get('plainPassword')->getData();
+            
+            // Vérifier que le mot de passe n'est pas null
+            if (!$plainPassword) {
+                throw new \InvalidArgumentException('Le mot de passe ne peut pas être vide');
+            }
+
+            // Hash du mot de passe
+            $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
             $user->setPassword($hashedPassword);
+
+            // Définir le rôle par défaut
+            $user->setRoles(['ROLE_USER']);
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
+
+            // Ajouter un message flash de succès
+            $this->addFlash('success', 'Votre compte a été créé avec succès !');
 
             return $this->redirectToRoute('app_login');
         }
 
         return $this->render('user/register.html.twig', [
-            'registrationForm' => $form->createView(), 
+            'registrationForm' => $form->createView(),
         ]);
     }
+
     #[Route('/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // Récupère les erreurs d'authentification si elles existent
+        // Si l'utilisateur est déjà connecté, le rediriger
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');  // Remplacez 'home' par votre route d'accueil
+        }
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
     
@@ -58,10 +74,11 @@ class UserController extends AbstractController
         ]);
     }
     
-
-    #[Route('/logout', name: 'app_logout')]
-    public function logout()
+    #[Route('/logout', name: 'app_logout', methods: ['GET'])]
+    public function logout(): void
     {
-        
+        // Cette méthode peut rester vide
+        // Elle sera interceptée par le système de sécurité de Symfony
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

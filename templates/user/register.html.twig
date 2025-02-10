@@ -1,28 +1,68 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Inscription{% endblock %}
+
 {% block body %}
 <br>
-    <form method="post" class="neumorphic-form">
-        <h3>Inscription</h3>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="neumorphic-form">
+                    <h3 class="text-center mb-4">Inscription</h3>
 
-        {{ form_start(registrationForm) }}
+                    {{ form_start(registrationForm) }}
+                        
+                        {# Affichage des erreurs globales #}
+                        {% if not registrationForm.vars.valid %}
+                            <div class="alert alert-danger">
+                                {{ form_errors(registrationForm) }}
+                            </div>
+                        {% endif %}
 
-        <div class="input-group">
-            {{ form_widget(registrationForm.username, {'attr': {'placeholder': 'Nom d\'utilisateur'}}) }}
+                        <div class="mb-3">
+                            {{ form_widget(registrationForm.email, {
+                                'attr': {
+                                    'class': 'form-control',
+                                    'placeholder': 'Email'
+                                }
+                            }) }}
+                            {{ form_errors(registrationForm.email) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_widget(registrationForm.plainPassword, {
+                                'attr': {
+                                    'class': 'form-control',
+                                    'placeholder': 'Mot de passe'
+                                }
+                            }) }}
+                            {{ form_errors(registrationForm.plainPassword) }}
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            {{ form_widget(registrationForm.agreeTerms, {
+                                'attr': {
+                                    'class': 'form-check-input'
+                                }
+                            }) }}
+                            {{ form_label(registrationForm.agreeTerms, "J'accepte les conditions d'utilisation", {
+                                'label_attr': {
+                                    'class': 'form-check-label'
+                                }
+                            }) }}
+                            {{ form_errors(registrationForm.agreeTerms) }}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn neumorphic-btn">S'inscrire</button>
+                        </div>
+                    {{ form_end(registrationForm) }}
+
+                    <div class="text-center mt-3">
+                        <a href="{{ path('app_login') }}" class="text-decoration-none fst-italic">Vous avez déjà un compte ?</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="input-group">
-            {{ form_widget(registrationForm.email, {'attr': {'placeholder': 'Email'}}) }}
-        </div>
-        <div class="input-group">
-            {{ form_widget(registrationForm.password, {'attr': {'placeholder': 'Mot de passe'}}) }}
-        </div>
-
-        <button type="submit" class="neumorphic-btn">S'inscrire</button><br>
-
-        {{ form_end(registrationForm) }}
-    </form>
-    <div class="d-flex justify-content-center">
-        <a href="{{ path('app_login') }}" class="fst-italic">Vous avez déjà un compte ?</a>
     </div>
 {% endblock %}
-
