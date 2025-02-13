@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Form\CommentType;
 use App\Repository\PostRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,10 +37,23 @@ final class FrontController extends AbstractController{
     }
 
     #[Route('/actualites/{id}--{slug}', name: 'app_front_actu_detail')]
-    public function actuDetail(): Response
+    public function actuDetail(int $id, PostRepository $postRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $post = $postRepository->findOneBy(['id' => $id]);
+        $comment = new Comment;
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setPost($post);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            $this->addFlash('success', 'Votre commentiare a bien été ajouté');
+            return $this->redirectToRoute('app_front_actualites',['id' => $post->getId(), 'slug'=>$post->getSlug()]);
+        }
+
         return $this->render('front/actu_detail.html.twig', [
-            'controller_name' => 'FrontController',
+            'post' => $post,
+            'form' => $form,
         ]);
     }
 

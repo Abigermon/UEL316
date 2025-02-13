@@ -27,6 +27,11 @@ class Comment
     #[ORM\Column(nullable: true)]
     private ?bool $isValid = null;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

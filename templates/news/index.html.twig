@@ -23,7 +23,7 @@
                         {% endif %}
                         
                         <div class="card-body">
-                            <h5 class="card-title">{{ post.title }}</h5>
+                            <h5 class="card-title"><a href="{{ path('app_front_actu_detail',  { 'id': post.id, 'slug': post.title|lower|replace({' ': '-'}) }) }}"> {{ post.title }} </a></h5>
                             
                             {% if post.tag|length > 0 %}
                                 <div class="mb-3">
