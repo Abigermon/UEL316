@@ -1,12 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container text-center mt-5">
+<div class="container mt-5">
+   
+    <div class="text-center mb-5">
         <h1 class="mb-4">Bienvenue sur HVAgency</h1>
         <p>Restez informé avec nos dernières actualités et découvrez tout sur notre entreprise.</p>
-        <a href="{{ path('app_front_actualites') }}" class="btn btn-primary">Voir les actualités</a>
-        </div>
+        <a href="{{ path('app_front_actualites') }}" class="btn btn-primary">Voir toutes les actualités</a>
     </div>
+
+    
+    <div class="mt-5">
+        <h2 class="mb-4 text-primary">Dernières actualités</h2>
+
+        {% if posts|length > 0 %}
+            <div class="row">
+                {% for post in posts|slice(0, 3) %}
+                    <div class="col-md-4">
+                        <div class="card shadow-sm mb-4">
+                            {% if post.image %}
+                                <img src="{{ asset(post.image) }}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.title }}</h5>
+                                <p class="card-text text-muted">{{ post.createdAt|date('d M Y') }}</p>
+                                <p class="card-text">
+                                    {{ post.content|striptags|slice(0, 100) }}...
+                                </p>
+                                <a href="{{ path('app_front_actu_detail', { 'id': post.id, 'slug': post.slug }) }}" class="btn btn-outline-primary">Lire plus</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">Aucune actualité pour le moment.</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
-
-

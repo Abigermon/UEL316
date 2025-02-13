@@ -14,10 +14,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class FrontController extends AbstractController{
     #[Route('/', name: 'app_front')]
-    public function index(): Response
+    public function index(PostRepository $postRepository): Response
     {
+        $post = $postRepository->findBy([], ['createdAt' => 'DESC'], 3);
         return $this->render('home/index.html.twig', [
             'controller_name' => 'FrontController',
+            'posts' => $post,
         ]);
     }
     #[Route('/actualites', name: 'app_front_actualites')]
@@ -41,6 +43,7 @@ final class FrontController extends AbstractController{
     {
         $post = $postRepository->findOneBy(['id' => $id]);
         $comment = new Comment;
+        $comment->setIsValid(true);
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -48,7 +51,7 @@ final class FrontController extends AbstractController{
             $entityManager->persist($comment);
             $entityManager->flush();
             $this->addFlash('success', 'Votre commentiare a bien été ajouté');
-            return $this->redirectToRoute('app_front_actualites',['id' => $post->getId(), 'slug'=>$post->getSlug()]);
+            return $this->redirectToRoute('app_front_actu_detail', ['id' => $post->getId(), 'slug' => $post->getSlug()]);
         }
 
         return $this->render('front/actu_detail.html.twig', [
@@ -72,5 +75,18 @@ final class FrontController extends AbstractController{
             'controller_name' => 'FrontController',
         ]);
     }
+
+    #[Route('/comment/report/{id}', name: 'app_front_report_comment')]
+public function reportComment(Comment $comment, EntityManagerInterface $entityManager, Request $request): Response
+{
+    $comment->setIsValid(false); 
+    $entityManager->flush();
+
+    $this->addFlash('success', 'Le commentaire a été signalé et est en attente de validation.');
+
+    
+    return $this->redirect($request->headers->get('referer'));
+}
+
     
 }
