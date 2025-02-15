@@ -1,77 +1,156 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<style>
+:root {
+    --primary-color: #5A6521;
+    --primary-light: rgba(90, 101, 33, 0.1);
+}
+
+.badge-custom {
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 20px;
+}
+
+.article-date {
+    color: #6c757d;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.comment-box {
+    border-radius: 12px;
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.comment-box:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.report-btn {
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.report-btn:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.content-text {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+</style>
+
 <div class="container py-5">
-    <!-- Titre et tags -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="mb-0">{{ post.title }}</h1>
-        {% if post.tag|length > 0 %}
-            <div>
-                {% for tag in post.tag %}
-                    <span class="badge bg-warning text-dark me-1">
-                        {{ tag.name }}
-                    </span>
-                {% endfor %}
+    <div class="mb-4">
+        <h1 class="display-4 fw-bold mb-3" style="color: var(--primary-color);">{{ post.title }}</h1>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div class="article-date">
+                <i class="bi bi-calendar3"></i>
+                {{ post.createdAt|date('d M Y à H:i') }}
             </div>
-        {% endif %}
-    </div>
-
-    <!-- Image -->
-    {% if post.image %}
-        <img src="{{ asset(post.image) }}" alt="{{ post.title }}" class="img-fluid object-fit-cover rounded mb-4" style="max-height: 400px; width: 100%;">
-    {% endif %}
-
-    <!-- Contenu de l'article -->
-    <div class="content-text">
-        <p class="text-muted">{{ post.createdAt|date('d/M/Y H:i') }}</p>
-        <div class="border-bottom pb-3 mb-4">
-            {{ post.content|raw }}
+            {% if post.tag|length > 0 %}
+                <div class="d-flex gap-2 flex-wrap">
+                    {% for tag in post.tag %}
+                        <span class="badge-custom">
+                            <i class="bi bi-tag me-1"></i>
+                            {{ tag.name }}
+                        </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
     </div>
 
-    <!-- Section des commentaires -->
-    <div class="mt-5">
-        <h3 class="mb-4 text-primary">Commentaires</h3>
+    {% if post.image %}
+        <div class="position-relative mb-5">
+            <img src="{{ asset(post.image) }}" 
+                 alt="{{ post.title }}" 
+                 class="img-fluid rounded-4 shadow-sm" 
+                 style="width: 100%; max-height: 500px; object-fit: cover;">
+        </div>
+    {% endif %}
 
-        <!-- Affichage des commentaires existants -->
+    <div class="content-text bg-white p-4 rounded-4 shadow-sm mb-5">
+        {{ post.content|raw }}
+    </div>
+
+    <div class="bg-light p-4 rounded-4 mt-5">
+        <h3 class="fw-bold mb-4" style="color: var(--primary-color);">
+            <i class="bi bi-chat-square-text me-2"></i>
+            Commentaires ({{ post.comments|length }})
+        </h3>
+
         {% if post.comments|length > 0 %}
-            <div class="list-group mb-4">
+            <div class="mb-4">
                 {% for comment in post.comments %}
                     {% if comment.isValid %}
-                         <div class="card p-3 mb-3 position-relative">
-                                <div>
-                                    <small class="text-muted">{{ comment.createdAt|date('d/M/Y H:i') }}</small>
+                        <div class="comment-box bg-white p-4 mb-3">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-person-circle fs-4"></i>
+                                    <div>
+                                        <small class="text-muted">
+                                            {{ comment.createdAt|date('d M Y à H:i') }}
+                                        </small>
+                                    </div>
                                 </div>
-                                <p>{{ comment.content }}</p>
-
-                                <!-- Bouton Signaler avec une classe spécifique -->
                                 <a href="{{ path('app_front_report_comment', { 'id': comment.id }) }}" 
-                                class="btn btn-danger btn-sm position-absolute bottom-0 end-0 mb-2 me-2" style="font-size: 1rem; padding: 5px 10px;">
-                                    🚨 Signaler
+                                   class="btn btn-outline-danger btn-sm report-btn">
+                                    <i class="bi bi-flag me-1"></i>
+                                    Signaler
                                 </a>
                             </div>
+                            <p class="mb-0">{{ comment.content }}</p>
+                        </div>
                     {% else %}
-                        <div class="alert alert-warning">
-                            <strong>⚠️ Ce commentaire a été signalé et est en attente de validation.</strong>
+                        <div class="alert alert-warning d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            Ce commentaire a été signalé et est en attente de validation.
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
         {% else %}
-            <p class="text-muted">Aucun commentaire pour l'instant. Soyez le premier à réagir !</p>
+            <div class="text-center p-4">
+                <i class="bi bi-chat-square text-muted fs-1 mb-3 d-block"></i>
+                <p class="text-muted mb-0">Aucun commentaire pour l'instant. Soyez le premier à réagir !</p>
+            </div>
         {% endif %}
 
-        <div class="card shadow-sm p-4">
-            <h4 class="mb-3 text-primary">Laissez un commentaire</h4>
+        <div class="card border-0 shadow-sm p-4 mt-4">
+            <h4 class="fw-bold mb-4" style="color: var(--primary-color);">
+                <i class="bi bi-pencil-square me-2"></i>
+                Laissez un commentaire
+            </h4>
+            
             {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
             
-            <div class="mb-3">
-                {{ form_label(form.content, 'Votre commentaire', {'label_attr': {'class': 'form-label fw-bold'}}) }}
-                {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Écrivez votre message ici...'}}) }}
+            <div class="mb-4">
+                {{ form_label(form.content, 'Votre message', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                {{ form_widget(form.content, {
+                    'attr': {
+                        'class': 'form-control form-control-lg',
+                        'placeholder': 'Partagez votre opinion...',
+                        'rows': '4',
+                        'style': 'border-radius: 12px;'
+                    }
+                }) }}
                 {{ form_errors(form.content) }}
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Envoyer</button>
+            <button type="submit" class="btn   btn-lg w-100" style="color:white; border-radius: 12px;background-color: var(--primary-color);">
+                <i class="bi bi-send me-2"></i>
+                Publier le commentaire
+            </button>
 
             {{ form_end(form) }}
         </div>
