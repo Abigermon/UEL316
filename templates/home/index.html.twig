@@ -1,40 +1,112 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container mt-5">
-   
-    <div class="text-center mb-5">
-        <h1 class="mb-4">Bienvenue sur HVAgency</h1>
-        <p>Restez informé avec nos dernières actualités et découvrez tout sur notre entreprise.</p>
-        <a href="{{ path('app_front_actualites') }}" class="btn btn-primary">Voir toutes les actualités</a>
+<style>
+:root {
+    --primary-color: #5A6521;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover {
+    background-color: #4a541b !important;
+    border-color: #4a541b !important;
+}
+
+.btn-outline-primary {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.btn-outline-primary:hover {
+    color: white !important;
+    background-color: var(--primary-color) !important;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.hover-shadow {
+    transition: all 0.3s ease;
+}
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.bg-gradient-dark {
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+}
+.transition {
+    transition: all 0.3s ease;
+}
+
+.card:hover .btn-outline-primary {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+</style>
+
+<div class="container py-5">
+    {# Section Hero #}
+    <div class="px-4 py-5 text-center rounded-3 mb-5 shadow-sm" style="background-color: rgba(90, 101, 33, 0.1);">
+        <h1 class="display-4 fw-bold mb-4" style="color: var(--primary-color);">Bienvenue sur HVAgency</h1>
+        <p class="lead mb-4">Restez informé avec nos dernières actualités et découvrez tout sur notre entreprise.</p>
+        <a href="{{ path('app_front_actualites') }}" class="btn btn-primary btn-lg px-4 gap-3">
+            Voir toutes les actualités
+            <i class="bi bi-arrow-right ms-2"></i>
+        </a>
     </div>
 
-    
-    <div class="mt-5">
-        <h2 class="mb-4 text-primary">Dernières actualités</h2>
+    {# Section Actualités #}
+    <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="display-6 text-primary fw-bold">Dernières actualités</h2>
+            <a href="{{ path('app_front_actualites') }}" class="text-decoration-none" style="color: var(--primary-color);">
+                Voir tout
+                <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
 
         {% if posts|length > 0 %}
-            <div class="row">
+            <div class="row g-4">
                 {% for post in posts|slice(0, 3) %}
                     <div class="col-md-4">
-                        <div class="card shadow-sm mb-4">
+                        <div class="card h-100 border-0 shadow-sm hover-shadow transition">
                             {% if post.image %}
-                                <img src="{{ asset(post.image) }}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+                                <div class="position-relative">
+                                    <img src="{{ asset(post.image) }}" 
+                                         class="card-img-top" 
+                                         alt="{{ post.title }}" 
+                                         style="height: 200px; object-fit: cover;">
+                                    <div class="position-absolute bottom-0 start-0 p-3 w-100 bg-gradient-dark">
+                                        <small class="text-white">{{ post.createdAt|date('d M Y') }}</small>
+                                    </div>
+                                </div>
                             {% endif %}
-                            <div class="card-body">
-                                <h5 class="card-title">{{ post.title }}</h5>
-                                <p class="card-text text-muted">{{ post.createdAt|date('d M Y') }}</p>
-                                <p class="card-text">
+                            <div class="card-body p-4">
+                                <h5 class="card-title fw-bold mb-3" style="color: var(--primary-color);">{{ post.title }}</h5>
+                                <p class="card-text text-muted mb-4">
                                     {{ post.content|striptags|slice(0, 100) }}...
                                 </p>
-                                <a href="{{ path('app_front_actu_detail', { 'id': post.id, 'slug': post.slug }) }}" class="btn btn-outline-primary">Lire plus</a>
+                                <a href="{{ path('app_front_actu_detail', { 'id': post.id, 'slug': post.slug }) }}" 
+                                   class="btn btn-outline-primary rounded-pill">
+                                    Lire l'article
+                                    <i class="bi bi-arrow-right ms-2"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p class="text-muted">Aucune actualité pour le moment.</p>
+            <div class="alert alert-info text-center p-5">
+                <i class="bi bi-info-circle fs-4 mb-3 d-block"></i>
+                <p class="mb-0">Aucune actualité n'est disponible pour le moment.</p>
+            </div>
         {% endif %}
     </div>
 </div>

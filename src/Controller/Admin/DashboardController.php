@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Tag;
 use App\Entity\Post;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -32,5 +33,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Gestion des postes', 'fas fa-folder', Post::class);
         yield MenuItem::linkToCrud('Categories', 'fas fa-list', Category::class);
         yield MenuItem::linkToCrud('Tag', 'fas fa-list', Tag::class);
+        yield MenuItem::linkToCrud('Commentaire', 'fas fa-list', Comment::class);
+
     }
 }
