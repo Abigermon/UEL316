@@ -30,6 +30,9 @@ USER root
 # Donner les bons droits aux fichiers de cache et logs
 RUN mkdir -p var && chown -R www-data:www-data var
 
+# Modifier la racine d'Apache pour Symfony
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+
 # Exposer le port 80
 EXPOSE 80
 
