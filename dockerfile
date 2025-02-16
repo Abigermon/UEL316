@@ -1,0 +1,29 @@
+# Utilisation de PHP 8.2 avec Apache
+FROM php:8.2-apache
+
+# Installer les extensions PHP nécessaires
+RUN apt-get update && apt-get install -y \
+    libicu-dev \
+    unzip \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_mysql intl
+
+# Installer Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Définir le répertoire de travail
+WORKDIR /var/www/html
+
+# Copier les fichiers de l'application
+COPY . .
+
+# Installer les dépendances PHP
+RUN composer install --no-dev --optimize-autoloader
+
+# Donner les bons droits aux fichiers de cache et logs
+RUN chown -R www-data:www-data var
+
+# Exposer le port 80
+EXPOSE 80
+
+CMD ["apache2-foreground"]
