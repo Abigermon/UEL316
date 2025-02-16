@@ -17,8 +17,15 @@ WORKDIR /var/www/html
 # Copier les fichiers de l'application
 COPY . .
 
-# Installer les dépendances PHP
-RUN composer install --no-dev --optimize-autoloader
+# Créer un utilisateur "symfony" pour éviter les problèmes liés à root
+RUN useradd -m symfony && chown -R symfony /var/www/html
+
+# Passer à l'utilisateur "symfony" pour exécuter Composer sans erreurs
+USER symfony
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+
+# Revenir à l'utilisateur root
+USER root
 
 # Donner les bons droits aux fichiers de cache et logs
 RUN chown -R www-data:www-data var
