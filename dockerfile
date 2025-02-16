@@ -28,7 +28,7 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 USER root
 
 # Donner les bons droits aux fichiers de cache et logs
-RUN chown -R www-data:www-data var
+RUN mkdir -p var && chown -R www-data:www-data var
 
 # Exposer le port 80
 EXPOSE 80
